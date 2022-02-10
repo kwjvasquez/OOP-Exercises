@@ -25,6 +25,11 @@ class User
   def count
     @all.size
   end
+
+  def find(id)
+    user_searched = @all.find { |user| user if id == user[:id] }
+    user_searched.select { |key, value|  value != id } unless user_searched.nil?
+  end
 end
 
 users = User.new
@@ -43,4 +48,6 @@ user2_info = {
   age: 32
 }
 users.create(**user2_info)
+p users.all
 p users.count
+p users.find('0004')
