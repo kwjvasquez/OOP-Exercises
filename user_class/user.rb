@@ -21,6 +21,10 @@ class User
 
     @all << info
   end
+
+  def count
+    @all.size
+  end
 end
 
 users = User.new
@@ -39,4 +43,4 @@ user2_info = {
   age: 32
 }
 users.create(**user2_info)
-p users.all
+p users.count
