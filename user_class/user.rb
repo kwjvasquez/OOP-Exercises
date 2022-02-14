@@ -27,8 +27,7 @@ class User
   end
 
   def find(id)
-    user_searched = @all.find { |user| user if id == user[:id] }
-    user_searched.select { |key, value|  value != id } unless user_searched.nil?
+    @all.find { |user| user if id == user[:id] }
   end
 end
 
