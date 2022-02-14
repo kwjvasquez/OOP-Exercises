@@ -55,6 +55,10 @@ class User
       end
     end
   end
+
+  def destroy(id:)
+    @all.delete_if { |user| id == user[:id] }
+  end
 end
 
 users = User.new
@@ -95,3 +99,6 @@ p users.where(first_name: 'Axel')
 p users.find('0020')
 users.update(id: '0020', first_name: 'Artemis', age: 30, oh: 'new attribute')
 p users.find('0020')
+p users.count
+users.destroy(id: '0020')
+p users.count
