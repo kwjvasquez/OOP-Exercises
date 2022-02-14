@@ -29,6 +29,20 @@ class User
   def find(id)
     @all.find { |user| user if id == user[:id] }
   end
+
+  def where(**kwargs)
+    elements = []
+
+    @all.each do |user|
+      check = true
+      kwargs.each do |atr, value|
+        check = false unless user[atr] == value
+      end
+      elements << user if check
+    end
+
+    elements
+  end
 end
 
 users = User.new
@@ -47,6 +61,22 @@ user2_info = {
   age: 32
 }
 users.create(**user2_info)
+user3_info = {
+  id: '0009',
+  first_name: 'Axel',
+  last_name: 'Riot',
+  email: 'ariot@example.com'
+}
+users.create(**user3_info)
+user4_info = {
+  id: '0020',
+  first_name: 'Hiena',
+  last_name: 'Intel',
+  email: 'hintel@example.com',
+  address: 'CR 4B # 7'
+}
+users.create(**user4_info)
 p users.all
 p users.count
 p users.find('0004')
+p users.where(first_name: 'Axel')
