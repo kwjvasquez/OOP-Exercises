@@ -1,4 +1,6 @@
 class User
+  @@VALID_ATR = %i(first_name last_name email age address)
+
   attr_reader :all
 
   def initialize
@@ -43,6 +45,16 @@ class User
 
     elements
   end
+
+  def update(id:, **info_update)
+    @all.map do |user|
+      if id == user[:id]
+        info_update.each do |atr, value_update|
+          user[atr] = value_update if @@VALID_ATR.include?(atr)
+        end
+      end
+    end
+  end
 end
 
 users = User.new
@@ -80,3 +92,6 @@ p users.all
 p users.count
 p users.find('0004')
 p users.where(first_name: 'Axel')
+p users.find('0020')
+users.update(id: '0020', first_name: 'Artemis', age: 30, oh: 'new attribute')
+p users.find('0020')
