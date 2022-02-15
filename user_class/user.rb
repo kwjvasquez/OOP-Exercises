@@ -1,9 +1,10 @@
 class User
+  VALID_ATR = %i(first_name last_name email age address)
+
   attr_reader :all
 
   def initialize
     @all = []
-    @VALID_ATR = %i(first_name last_name email age address)
   end
 
   def create(id:, first_name:, last_name:, email:, **optional_info)
@@ -49,7 +50,7 @@ class User
     @all.map do |user|
       if id == user[:id]
         info_update.each do |atr, value_update|
-          user[atr] = value_update if @VALID_ATR.include?(atr)
+          user[atr] = value_update if VALID_ATR.include?(atr)
         end
       end
     end
