@@ -1,24 +1,23 @@
 class User
-  @@VALID_ATR = %i(first_name last_name email age address)
-
   attr_reader :all
 
   def initialize
     @all = []
+    @VALID_ATR = %i(first_name last_name email age address)
   end
 
-  def create(id:, first_name:, last_name:, email:, **kwargs)
+  def create(id:, first_name:, last_name:, email:, **optional_info)
     info = {
       id: id,
       first_name: first_name,
       last_name: last_name,
       email: email
     }
-    if kwargs[:age]
-      info.merge!({age: kwargs[:age]})
+    if optional_info[:age]
+      info.merge!({age: optional_info[:age]})
     end
-    if kwargs[:address]
-      info.merge!({address: kwargs[:address]})
+    if optional_info[:address]
+      info.merge!({address: optional_info[:address]})
     end
 
     @all << info
@@ -32,12 +31,12 @@ class User
     @all.find { |user| user if id == user[:id] }
   end
 
-  def where(**kwargs)
+  def where(**filters)
     elements = []
 
     @all.each do |user|
       check = true
-      kwargs.each do |atr, value|
+      filters.each do |atr, value|
         check = false unless user[atr] == value
       end
       elements << user if check
@@ -50,7 +49,7 @@ class User
     @all.map do |user|
       if id == user[:id]
         info_update.each do |atr, value_update|
-          user[atr] = value_update if @@VALID_ATR.include?(atr)
+          user[atr] = value_update if @VALID_ATR.include?(atr)
         end
       end
     end
@@ -69,6 +68,7 @@ user1_info = {
   email: 'aryzen@example.com'
 }
 users.create(**user1_info)
+
 user2_info = {
   id: '0004',
   first_name: 'Liliana',
@@ -77,6 +77,7 @@ user2_info = {
   age: 32
 }
 users.create(**user2_info)
+
 user3_info = {
   id: '0009',
   first_name: 'Axel',
@@ -84,6 +85,7 @@ user3_info = {
   email: 'ariot@example.com'
 }
 users.create(**user3_info)
+
 user4_info = {
   id: '0020',
   first_name: 'Hiena',
@@ -92,13 +94,14 @@ user4_info = {
   address: 'CR 4B # 7'
 }
 users.create(**user4_info)
+
 puts "Users: #{users.all}"
 puts "Total users: #{users.count}"
-p "User searched: #{users.find('0004')}"
-p "Users matched: #{users.where(first_name: 'Axel')}"
-p "User current info: #{users.find('0020')}"
+puts "User searched: #{users.find('0004')}"
+puts "Users matched: #{users.where(first_name: 'Axel')}"
+puts "User current info: #{users.find('0020')}"
 users.update(id: '0020', first_name: 'Artemis', age: 30, oh: 'new attribute')
-p "User update info: #{users.find('0020')}"
+puts "User update info: #{users.find('0020')}"
 puts "Total users: #{users.count}"
 users.destroy(id: '0020')
 puts "Total users: #{users.count}"
