@@ -92,13 +92,14 @@ user4_info = {
   address: 'CR 4B # 7'
 }
 users.create(**user4_info)
-p users.all
-p users.count
-p users.find('0004')
-p users.where(first_name: 'Axel')
-p users.find('0020')
+puts "Users: #{users.all}"
+puts "Total users: #{users.count}"
+p "User searched: #{users.find('0004')}"
+p "Users matched: #{users.where(first_name: 'Axel')}"
+p "User current info: #{users.find('0020')}"
 users.update(id: '0020', first_name: 'Artemis', age: 30, oh: 'new attribute')
-p users.find('0020')
-p users.count
+p "User update info: #{users.find('0020')}"
+puts "Total users: #{users.count}"
 users.destroy(id: '0020')
-p users.count
+puts "Total users: #{users.count}"
+puts "Users: #{users.all}"
