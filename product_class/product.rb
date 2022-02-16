@@ -21,6 +21,10 @@ class Product
 
     @all << info
   end
+
+  def count
+    @all.size
+  end
 end
 
 products = Product.new
@@ -44,3 +48,5 @@ product2_info = {
 products.create(**product2_info)
 
 puts "Products: #{products.all}"
+puts "Total products: #{products.count}"
+
