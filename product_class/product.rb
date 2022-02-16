@@ -55,6 +55,10 @@ class Product
       end
     end
   end
+
+  def destroy(id:)
+    @all.delete_if { |product| id == product[:id] }
+  end
 end
 
 products = Product.new
@@ -92,3 +96,7 @@ puts "Product matched: #{products.where(brand: 'Apple')}"
 puts "Product current info: #{products.find(id: 'T0001')}"
 products.update(id: 'T0001', quantity: 15)
 puts "Product info update: #{products.find(id: 'T0001')}"
+puts "Total products: #{products.count}"
+products.destroy(id: 'T0051')
+puts "Total products: #{products.count}"
+puts "products: #{products.all}"
