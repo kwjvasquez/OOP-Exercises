@@ -15,10 +15,10 @@ class Product
       brand: brand
     }
     if optional_info[:description]
-      info.merge!({description: optional_info[:description]})
+      info.merge!(description: optional_info[:description])
     end
     if optional_info[:quantity]
-      info.merge!({quantity: optional_info[:quantity]})
+      info.merge!(quantity: optional_info[:quantity])
     end
 
     @all << info
@@ -47,11 +47,10 @@ class Product
   end
 
   def update(id:, **info_update)
-    @all.map do |product|
-      if id == product[:id]
-        info_update.each do |atr, value_update|
-          product[atr] = value_update if VALID_ATR.include?(atr)
-        end
+    @all.find do |product|
+      id == product[:id]
+      info_update.each do |atr, value_update|
+        product[atr] = value_update if VALID_ATR.include?(atr)
       end
     end
   end
