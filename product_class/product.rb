@@ -29,6 +29,20 @@ class Product
   def find(id:)
     @all.find { |product| id == product[:id] }
   end
+
+  def where(**filters)
+    products = []
+
+    @all.each do |product|
+      check = true
+      filters.each do |atr, value|
+        check = false unless product[atr] == value
+      end
+      products << product if check
+    end
+
+    products
+  end
 end
 
 products = Product.new
@@ -51,6 +65,15 @@ product2_info = {
 }
 products.create(**product2_info)
 
+product1_info = {
+  id: 'T0051',
+  name: 'MacBook Air 13p M1',
+  value: 5_000_000,
+  brand: 'Apple'
+}
+products.create(**product1_info)
+
 puts "Products: #{products.all}"
 puts "Total products: #{products.count}"
 puts "Product searched: #{products.find(id: 'T0001')}"
+puts "Product matched: #{products.where(brand: 'Apple')}"
