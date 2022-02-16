@@ -25,6 +25,10 @@ class Product
   def count
     @all.size
   end
+
+  def find(id:)
+    @all.find { |product| id == product[:id] }
+  end
 end
 
 products = Product.new
@@ -49,4 +53,4 @@ products.create(**product2_info)
 
 puts "Products: #{products.all}"
 puts "Total products: #{products.count}"
-
+puts "Product searched: #{products.find(id: 'T0001')}"
