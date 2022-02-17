@@ -47,11 +47,12 @@ class Product
   end
 
   def update(id:, **info_update)
-    @all.find do |product|
-      id == product[:id]
-      info_update.each do |atr, value_update|
-        product[atr] = value_update if VALID_ATR.include?(atr)
-      end
+    product = find(id: id)
+
+    return unless product
+
+    info_update.each do |atr, value_update|
+      product[atr] = value_update if VALID_ATR.include?(atr)
     end
   end
 
@@ -80,13 +81,13 @@ product2_info = {
 }
 products.create(**product2_info)
 
-product1_info = {
+product3_info = {
   id: 'T0051',
   name: 'MacBook Air 13p M1',
   value: 5_000_000,
   brand: 'Apple'
 }
-products.create(**product1_info)
+products.create(**product3_info)
 
 puts "Products: #{products.all}"
 puts "Total products: #{products.count}"
