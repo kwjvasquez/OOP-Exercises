@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Product class
 class Product
-  VALID_ATR = %i(name value brand description quantity)
+  VALID_ATR = %i[name value brand description quantity].freeze
 
   attr_reader :all
 
@@ -7,19 +10,15 @@ class Product
     @all = []
   end
 
-  def create(id:, name:, value:, brand:, **optional_info)
+  def create(id:, name:, value:, brand:, **opt_info)
     info = {
       id: id,
       name: name,
       value: value,
       brand: brand
     }
-    if optional_info[:description]
-      info.merge!(description: optional_info[:description])
-    end
-    if optional_info[:quantity]
-      info.merge!(quantity: optional_info[:quantity])
-    end
+    info.merge!(description: opt_info[:description]) if opt_info[:description]
+    info.merge!(quantity: opt_info[:quantity]) if opt_info[:quantity]
 
     @all << info
   end
