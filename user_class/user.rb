@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# User class
 class User
-  VALID_ATR = %i(first_name last_name email age address)
+  VALID_ATR = %i[first_name last_name email age address].freeze
 
   attr_reader :all
 
@@ -7,19 +10,15 @@ class User
     @all = []
   end
 
-  def create(id:, first_name:, last_name:, email:, **optional_info)
+  def create(id:, first_name:, last_name:, email:, **opt_info)
     info = {
       id: id,
       first_name: first_name,
       last_name: last_name,
       email: email
     }
-    if optional_info[:age]
-      info.merge!({age: optional_info[:age]})
-    end
-    if optional_info[:address]
-      info.merge!({address: optional_info[:address]})
-    end
+    info.merge!(age: opt_info[:age]) if opt_info[:age]
+    info.merge!(address: opt_info[:address]) if opt_info[:address]
 
     @all << info
   end
@@ -47,12 +46,12 @@ class User
   end
 
   def update(id:, **info_update)
-    @all.map do |user|
-      if id == user[:id]
-        info_update.each do |atr, value_update|
-          user[atr] = value_update if VALID_ATR.include?(atr)
-        end
-      end
+    user = find(id)
+
+    return unless user
+
+    info_update.each do |atr, value_update|
+      user[atr] = value_update if VALID_ATR.include?(atr)
     end
   end
 
