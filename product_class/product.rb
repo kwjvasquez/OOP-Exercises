@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Product class
 class Product
   VALID_ATR = %i[name value brand description quantity].freeze
 
