@@ -10,6 +10,8 @@ class User
   end
 
   def create(id:, first_name:, last_name:, email:, **opt_info)
+    return if find(id)
+
     info = {
       id: id,
       first_name: first_name,
