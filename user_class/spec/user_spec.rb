@@ -10,13 +10,13 @@ RSpec.describe User do
 
   describe ".create" do
     context "when all arguments are passed" do
-      context "when the user id non-exist" do
+      context "when the user id does not exist" do
         it "adds a user" do
           expect { subject.create(**info_user) }.to change(subject, :count).by(1)
         end
       end
 
-      context "when the user id already exist" do
+      context "when the user id already exists" do
         it "does not add a user" do
           subject.create(**info_user)
           info_user2 = attributes_for(:user)
