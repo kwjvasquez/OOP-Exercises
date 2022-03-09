@@ -44,23 +44,22 @@ RSpec.describe User do
   end
 
   describe "#find" do
+    let(:user) { subject.create(**info_user) }
+
+    before do
+      user
+    end
+
     context "when the user exists" do
+      let(:user_id) { info_user[:id] }
+
       it "returns the information" do
-        subject.create(**info_user)
-        info_user2 = attributes_for(:user)
-        subject.create(**info_user2)
-        info_searched_user = subject.find(info_user[:id])
-        expect(info_searched_user).to eq(info_user)
+        expect(subject.find(user_id)).to eq(info_user)
       end
     end
 
     context "when the user does not exist" do
-      let(:user) { subject.create(**info_user) }
       let(:user_id) { 999 }
-
-      before do
-        user
-      end
 
       it "returns nil" do
         expect(subject.find(user_id)).to be_nil
