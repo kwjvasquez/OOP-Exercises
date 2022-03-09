@@ -3,6 +3,15 @@
 require_relative '../user'
 require 'factories'
 
+RSpec.shared_context "user info" do
+  let(:user) { subject.create(**info_user) }
+  let(:user_id) { info_user[:id] }
+
+  before do
+    user
+  end
+end
+
 RSpec.describe User do
   subject { described_class.new }
 
@@ -44,15 +53,9 @@ RSpec.describe User do
   end
 
   describe "#find" do
-    let(:user) { subject.create(**info_user) }
-
-    before do
-      user
-    end
+    include_context "user info"
 
     context "when the user exists" do
-      let(:user_id) { info_user[:id] }
-
       it "returns the information" do
         expect(subject.find(user_id)).to eq(info_user)
       end
@@ -68,16 +71,11 @@ RSpec.describe User do
   end
 
   describe ".update" do
-    let(:user) { subject.create(**info_user) }
+    include_context "user info"
+
     let(:update_info) { attributes_for(:user).except(:id, :last_name, :email) }
 
-    before do
-      user
-    end
-
     context "When the user exists" do
-      let(:user_id) { info_user[:id] }
-
       it "changes the information" do
         expect { subject.update(id: user_id, **update_info) }.to change { subject.find(user_id) }
       end
