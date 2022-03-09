@@ -66,4 +66,33 @@ RSpec.describe User do
       end
     end
   end
+
+  describe ".update" do
+    let(:user) { subject.create(**info_user) }
+    let(:update_info) { attributes_for(:user).except(:id, :last_name, :email) }
+
+    before do
+      user
+    end
+
+    context "When the user exists" do
+      let(:user_id) { info_user[:id] }
+
+      it "changes the information" do
+        expect { subject.update(id: user_id, **update_info) }.to change { subject.find(user_id) }
+      end
+    end
+
+    context "when the user does not exist" do
+      let(:user_id) { 999 }
+
+      it "does not change the information" do
+        expect { subject.update(id: user_id, **update_info) }.not_to change { subject.find(user_id) }
+      end
+
+      it "returns nil" do
+        expect(subject.update(id: user_id, **update_info)).to be_nil
+      end
+    end
+  end
 end
