@@ -33,15 +33,11 @@ RSpec.describe User do
     end
 
     context "when an optional argument is not passed" do
-      def user_without_optional_arg
-        info_new_user.delete(:age)
-        subject.create(**info_new_user)
-
-        subject.find(info_new_user[:id])
-      end
+      let(:info_new_user) { attributes_for(:user).except(:age) }
 
       it "adds a user without the attribute" do
-        save_user = user_without_optional_arg
+        subject.create(**info_new_user)
+        save_user = subject.find(info_new_user[:id])
         expect(save_user[:age]).to be_nil
       end
     end
@@ -75,7 +71,7 @@ RSpec.describe User do
 
     context "When the user exists" do
       it "updates the information" do
-        expect { subject.update(id: user_id, **update_info) }.to change { subject.find(user_id) }
+        expect { subject.update(id: user_id, **update_info) }.to change { user }
       end
 
       it "changes the users list" do
