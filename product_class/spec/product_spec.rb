@@ -46,5 +46,21 @@ RSpec.describe Product do
       end
     end
   end
+
+  describe "#find" do
+    context "when the product exists" do
+      it "returns the information" do
+        expect(subject.find(id: product_id)).to eq(info_product)
+      end
+    end
+
+    context "when the product does not exist" do
+      let(:product_id) { 999 }
+
+      it "returns nil" do
+        expect(subject.find(id: product_id)).to be_nil
+      end
+    end
+  end
 end
 
