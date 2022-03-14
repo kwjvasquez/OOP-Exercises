@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 products = Product.new
 puts "Products: #{products.all}"
 

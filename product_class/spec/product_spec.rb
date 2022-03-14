@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative "../product"
 require "factories"
 
@@ -59,6 +60,32 @@ RSpec.describe Product do
 
       it "returns nil" do
         expect(subject.find(id: product_id)).to be_nil
+      end
+    end
+  end
+
+  describe "#update" do
+    let(:update_info) { attributes_for(:product).except(:id, :brand, :quantity) }
+
+    context "When the product exists" do
+      it "updates the information" do
+        expect { subject.update(id: product_id, **update_info) }.to change { product }
+      end
+
+      it "changes the products list" do
+        expect { subject.update(id: product_id, **update_info) }.to change { subject.all }
+      end
+    end
+
+    context "when the product does not exist" do
+      let(:product_id) { 999 }
+
+      it "does not change the products list" do
+        expect { subject.update(id: product_id, **update_info) }.not_to change { subject.all }
+      end
+
+      it "returns nil" do
+        expect(subject.update(id: product_id, **update_info)).to be_nil
       end
     end
   end
