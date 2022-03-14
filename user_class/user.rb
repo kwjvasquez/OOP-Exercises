@@ -20,8 +20,9 @@ class User
     }
     info.merge!(age: opt_info[:age]) if opt_info[:age]
     info.merge!(address: opt_info[:address]) if opt_info[:address]
-
     @all << info
+
+    info
   end
 
   def count
