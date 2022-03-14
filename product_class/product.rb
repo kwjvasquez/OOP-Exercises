@@ -10,6 +10,8 @@ class Product
   end
 
   def create(id:, name:, value:, brand:, **opt_info)
+    return if find(id: id)
+
     info = {
       id: id,
       name: name,
