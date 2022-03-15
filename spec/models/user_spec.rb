@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../user'
-require 'factories'
+require_relative "../../models/user"
+require_relative "../factories/user_factory"
 
 RSpec.describe User do
   subject { described_class.new }
@@ -67,7 +67,7 @@ RSpec.describe User do
   describe "#update" do
     let(:update_info) { attributes_for(:user).except(:id, :last_name, :email) }
 
-    context "When the user exists" do
+    context "when the user exists" do
       it "updates the information" do
         expect { subject.update(id: user_id, **update_info) }.to change { user }
       end
