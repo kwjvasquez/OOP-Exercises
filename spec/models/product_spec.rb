@@ -15,7 +15,7 @@ RSpec.describe Product do
   end
 
   describe "#create" do
-    context "when all argements are passed" do
+    context "when all arguments are passed" do
       let(:info_new_product) { attributes_for(:product) }
 
       context "when the id product does not exist" do
@@ -67,7 +67,7 @@ RSpec.describe Product do
   describe "#update" do
     let(:update_info) { attributes_for(:product).except(:id, :brand, :quantity) }
 
-    context "When the product exists" do
+    context "when the product exists" do
       it "updates the information" do
         expect { subject.update(id: product_id, **update_info) }.to change { product }
       end
