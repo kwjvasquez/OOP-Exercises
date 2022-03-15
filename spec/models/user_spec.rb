@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../user'
-require 'factories'
+require_relative "../../models/user"
+require_relative "../factories/user_factory"
 
 RSpec.describe User do
   subject { described_class.new }

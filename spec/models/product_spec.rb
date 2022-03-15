@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../product"
-require "factories"
+require_relative "../../models/product"
+require_relative "../factories/product_factory"
 
 RSpec.describe Product do
   subject { Product.new }
